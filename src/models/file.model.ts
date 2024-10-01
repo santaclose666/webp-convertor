@@ -1,3 +1,3 @@
 export interface PhotosUpload {
-  image: File[];
+  images: File[];
 }

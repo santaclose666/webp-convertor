@@ -7,10 +7,14 @@
   },
   "dependencies": {
     "@elysiajs/eden": "^1.1.3",
+    "@ffmpeg-installer/ffmpeg": "^1.1.0",
+    "adm-zip": "^0.5.16",
     "elysia": "latest",
     "fluent-ffmpeg": "^2.1.3"
   },
   "devDependencies": {
+    "@types/adm-zip": "^0.5.5",
+    "@types/fluent-ffmpeg": "^2.1.26",
     "bun-types": "latest"
   },
   "module": "src/index.js"

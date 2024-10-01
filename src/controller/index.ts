@@ -1,8 +1,8 @@
 import { Elysia } from "elysia";
-import ptController from "./photos.controller";
+import { processPhotos } from "./photos.controller";
 
 const photosController = (app: Elysia) => {
-  app.post("processPhotos", ptController.processPhotos);
+  app.post("processPhotos", processPhotos);
 };
 
 export { photosController };
