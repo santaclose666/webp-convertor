@@ -6,19 +6,19 @@ import {
   writePath,
   readPath,
   removeDirectory,
+  removePath,
 } from "../util/fileSystem";
 import { convertToWebp } from "../util/ffmpeg";
 import AdmZip from "adm-zip";
 import { compressFile } from "../util/fileCompress";
-
-const tempPath = "tempUploads";
+import { v4 as uuidv4 } from "uuid";
 
 const processPhotos = async ({
   body: { images },
-  set,
 }: Context<{ body: PhotosUpload }>) => {
   try {
     const zip = new AdmZip();
+    const tempPath = uuidv4();
 
     for (const image of images) {
       const fileName = handleImageName(image.name);
@@ -37,16 +37,18 @@ const processPhotos = async ({
       if (content) {
         compressFile(zip, outputName, content);
       }
+
+      removePath(inputPath);
     }
 
-    removeDirectory(tempPath);
-    const zipBuffer = zip.toBuffer();
+    // removeDirectory(tempPath);
+    // const zipBuffer = zip.toBuffer();
 
-    set.headers["Content-Type"] = "application/zip";
-    set.headers["Content-Disposition"] =
-      "attachment; filename=converted_images.zip";
+    // set.headers["Content-Type"] = "application/zip";
+    // set.headers["Content-Disposition"] =
+    //   "attachment; filename=converted_images.zip";
 
-    return zipBuffer;
+    // return zipBuffer;
   } catch (error) {
     console.log("err", error);
   }
