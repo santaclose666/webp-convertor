@@ -1,11 +1,21 @@
 import AdmZip from "adm-zip";
 
-const compressFile = (zip: AdmZip, inputPath: string, data: Buffer) => {
+const compressFile = (zip: AdmZip, inputPath: string) => {
   try {
-    zip.addFile(inputPath, data);
+    zip.addLocalFolder(inputPath);
   } catch (error) {
     console.log("zip err", error);
   }
 };
 
-export { compressFile };
+const zipFile = (zip: AdmZip) => {
+  try {
+    const zipBuffer = zip.toBuffer();
+
+    return zipBuffer;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export { compressFile, zipFile };

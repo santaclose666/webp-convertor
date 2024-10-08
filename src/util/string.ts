@@ -1,12 +1,13 @@
-export const handleImageName = (name: string) => {
-  let fileName = "";
-  const nameStr = name.split(`.`);
+import { v4 as uuidv4 } from "uuid";
 
-  nameStr.forEach((char, idx) => {
-    if (idx !== nameStr.length - 1) {
-      fileName += char;
-    }
-  });
-
-  return fileName;
+const getRandomID = (limit: number = 6) => {
+  return uuidv4().slice(0, limit);
 };
+
+const getExtensionFile = (name: string, char: string = ".") => {
+  const exts = name.split(char);
+
+  return exts[exts.length - 1];
+};
+
+export { getRandomID, getExtensionFile };

@@ -9,10 +9,10 @@ photosController(app);
 app
   .use(
     cors({
-      origin: "http://localhost:3000",
+      origin: Bun.env.CLIENT_URL,
       methods: ["GET", "POST"],
     })
   )
-  .listen(4000, () => {
-    console.log("http://localhost:4000");
+  .listen(Number(Bun.env.SERVER_PORT), () => {
+    console.log("Server is running");
   });
