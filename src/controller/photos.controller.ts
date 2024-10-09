@@ -5,12 +5,13 @@ import { compressFile, zipFile } from "../util/fileCompress";
 import { sharpConvert } from "../util/sharpConvert";
 import { getExtensionFile, getRandomID } from "../util/string";
 import { createDirectory, removeDirectory } from "../util/fileSystem";
+import { checkIsArray } from "../util/array";
 
 const processPhotos = async ({
   body: { formatSize, files, typeConvert },
 }: Context<{ body: PhotosUpload }>) => {
-  // formatSize = checkIsArray(formatSize) ? formatSize : [formatSize];
-  // files = checkIsArray(files) ? files : [files];
+  formatSize = checkIsArray(formatSize) ? formatSize : [formatSize];
+  files = checkIsArray(files) ? files : [files];
 
   const outputFolder = `./${getRandomID(8)}`;
   await createDirectory(outputFolder);
