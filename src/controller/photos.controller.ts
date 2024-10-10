@@ -1,5 +1,5 @@
 import { Context } from "elysia";
-import { ImgSize, PhotosUpload } from "../models/file.model";
+import { imgFormat, ImgSize, PhotosUpload } from "../models/file.model";
 import AdmZip from "adm-zip";
 import { compressFile, zipFile } from "../util/fileCompress";
 import { sharpConvert } from "../util/sharpConvert";
@@ -13,7 +13,7 @@ const processPhotos = async ({
   formatSize = checkIsArray(formatSize) ? formatSize : [formatSize];
   files = checkIsArray(files) ? files : [files];
 
-  const outputFolder = `./${getRandomID(8)}`;
+  const outputFolder = `./${getRandomID(6)}`;
   await createDirectory(outputFolder);
 
   try {
@@ -22,17 +22,23 @@ const processPhotos = async ({
 
     for (let idx in files) {
       let name = files[idx].name;
+      const extension: imgFormat = getExtensionFile(name);
 
       if (typeConvert !== "Original") {
-        const extension = getExtensionFile(name);
-        name = name.replace(extension, typeConvert.toLocaleLowerCase());
+        name = name.replace(extension, typeConvert);
       }
 
       const output = `${outputFolder}/${name}`;
 
       const arrBuffer = await files[idx].arrayBuffer();
 
-      await sharpConvert(arrBuffer, resizeImg[idx], output);
+      await sharpConvert(
+        arrBuffer,
+        resizeImg[idx],
+        output,
+        extension,
+        typeConvert
+      );
     }
 
     compressFile(zip, outputFolder);
