@@ -1,4 +1,11 @@
-export type imgFormat = "Original" | "jpg" | "png" | "webp" | "avif" | "gif";
+export type imgFormat =
+  | "Original"
+  | "jpg"
+  | "png"
+  | "webp"
+  | "avif"
+  | "gif"
+  | "pdf";
 
 export interface ImgSize {
   w: number;

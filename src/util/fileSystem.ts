@@ -1,6 +1,6 @@
 import { rm, mkdir } from "node:fs/promises";
 
-const createDirectory = async (directoryPath: string) => {
+const createPath = async (directoryPath: string) => {
   try {
     await mkdir(directoryPath);
   } catch (error) {
@@ -8,7 +8,7 @@ const createDirectory = async (directoryPath: string) => {
   }
 };
 
-const removeDirectory = async (directoryPath: string) => {
+const removePath = async (directoryPath: string) => {
   try {
     await rm(directoryPath, { recursive: true, force: true });
   } catch (error) {
@@ -16,4 +16,4 @@ const removeDirectory = async (directoryPath: string) => {
   }
 };
 
-export { removeDirectory, createDirectory };
+export { removePath, createPath };

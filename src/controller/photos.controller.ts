@@ -2,9 +2,9 @@ import { Context } from "elysia";
 import { imgFormat, ImgSize, PhotosUpload } from "../models/file.model";
 import AdmZip from "adm-zip";
 import { compressFile, zipFile } from "../util/fileCompress";
-import { sharpConvert } from "../util/sharpConvert";
+import { imgConvert } from "../util/sharpConvert";
 import { getExtensionFile, getRandomID } from "../util/string";
-import { createDirectory, removeDirectory } from "../util/fileSystem";
+import { createPath, removePath } from "../util/fileSystem";
 import { checkIsArray } from "../util/array";
 
 const processPhotos = async ({
@@ -14,7 +14,7 @@ const processPhotos = async ({
   files = checkIsArray(files) ? files : [files];
 
   const outputFolder = `./${getRandomID(6)}`;
-  await createDirectory(outputFolder);
+  await createPath(outputFolder);
 
   try {
     const zip = new AdmZip();
@@ -32,7 +32,7 @@ const processPhotos = async ({
 
       const arrBuffer = await files[idx].arrayBuffer();
 
-      await sharpConvert(
+      await imgConvert(
         arrBuffer,
         resizeImg[idx],
         output,
@@ -55,7 +55,7 @@ const processPhotos = async ({
   } catch (error) {
     console.log(error);
   } finally {
-    await removeDirectory(outputFolder);
+    // await removePath(outputFolder);
   }
 };
 
