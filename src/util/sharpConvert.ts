@@ -34,29 +34,34 @@ const imgConvert = async (
 };
 
 const toPDF = async (buffer: ArrayBuffer, size: ImgSize, output: string) => {
-  try {
+  return new Promise(async (resolve, reject) => {
     const { w, h } = size;
     const newName = `${getRandomID(4)}.png`;
     const tempOutput = `./atemp/${newName}`;
 
     await toPNG(buffer, size, tempOutput);
 
-    const doc = new PDFDocument({ size: [h, w] });
+    const doc = new PDFDocument({ size: [w, h] });
 
     const streamOutput = createWriteStream(output);
     doc.pipe(streamOutput);
 
-    doc.image(tempOutput, {
+    doc.image(tempOutput, 0, 0, {
       fit: [w, h],
-      align: "center",
-      valign: "center",
     });
 
     doc.end();
+
+    streamOutput.on("finish", () => {
+      resolve("done");
+    });
+
+    streamOutput.on("error", () => {
+      reject();
+    });
+
     removePath(tempOutput);
-  } catch (error) {
-    console.log(error);
-  }
+  });
 };
 
 const toJPG = async (buffer: ArrayBuffer, size: ImgSize, output: string) => {

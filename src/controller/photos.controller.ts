@@ -55,7 +55,7 @@ const processPhotos = async ({
   } catch (error) {
     console.log(error);
   } finally {
-    // await removePath(outputFolder);
+    await removePath(outputFolder);
   }
 };
 
