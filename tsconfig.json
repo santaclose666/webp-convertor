@@ -3,7 +3,7 @@
     "target": "ES2021",
     "module": "ES2022",
     "moduleResolution": "node",
-    "types": ["bun-types"],
+    // "types": ["bun-types"],
     "outDir": "./dist",
     "rootDir": "./src",
     "esModuleInterop": true,
